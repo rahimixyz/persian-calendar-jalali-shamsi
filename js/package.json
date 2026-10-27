@@ -1,0 +1,29 @@
+{
+  "name": "taqvim",
+  "version": "1.0.0",
+  "description": "Accurate Solar Hijri (Jalali, Shamsi, Persian) calendar for JavaScript/TypeScript: astronomical leap years, Tehran time zone without DST, Persian parsing and formatting. Zero dependencies.",
+  "keywords": ["jalali", "shamsi", "persian", "persian-calendar", "solar-hijri", "iranian-calendar", "farsi", "date", "calendar", "afghanistan", "dari", "nowruz", "tehran", "timezone"],
+  "author": "Alireza Rahimi",
+  "license": "MIT",
+  "homepage": "https://github.com/rahimixyz/persian-calendar-jalali-shamsi#readme",
+  "repository": { "type": "git", "url": "git+https://github.com/rahimixyz/persian-calendar-jalali-shamsi.git", "directory": "js" },
+  "bugs": "https://github.com/rahimixyz/persian-calendar-jalali-shamsi/issues",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": { "types": "./dist/esm/index.d.ts", "default": "./dist/esm/index.js" },
+      "require": { "types": "./dist/cjs/index.d.ts", "default": "./dist/cjs/index.js" }
+    }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "sideEffects": false,
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json && node -e \"require('fs').writeFileSync('dist/cjs/package.json', '{\\\"type\\\":\\\"commonjs\\\"}')\"",
+    "test": "npm run build && node --test test/*.test.js"
+  },
+  "devDependencies": { "typescript": "^5.6.0" }
+}
