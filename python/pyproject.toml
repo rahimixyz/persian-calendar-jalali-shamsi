@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "taqvim"
+version = "1.0.0"
+description = "Accurate Solar Hijri (Jalali, Shamsi, Persian) calendar for Python: astronomical leap years, Tehran time zone without DST, Persian parsing and formatting. Zero dependencies."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+authors = [{ name = "Alireza Rahimi" }]
+keywords = ["jalali", "shamsi", "persian", "persian-calendar", "solar-hijri", "iranian-calendar", "farsi", "calendar", "date", "nowruz", "afghanistan", "dari", "tehran"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Natural Language :: Persian",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Libraries",
+  "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/rahimixyz/persian-calendar-jalali-shamsi"
+Source = "https://github.com/rahimixyz/persian-calendar-jalali-shamsi/tree/main/python"
+Issues = "https://github.com/rahimixyz/persian-calendar-jalali-shamsi/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/taqvim"]
