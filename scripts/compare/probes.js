@@ -1,0 +1,27 @@
+process.env.TZ='Asia/Tehran';
+const show=(n,f)=>{let v;try{v=f()}catch(e){v='throws: '+e.message.slice(0,50)}console.log(n.padEnd(60),String(v))};
+const jj=require('jalaali-js'), mj=require('moment-jalaali'), jm=require('jalali-moment'), dfj=require('date-fns-jalali'), PD=require('persian-date');
+const dayjs=require('dayjs'); {const j=require('jalaliday'); dayjs.extend(j.default||j);}
+console.log('--- 30 Esfand 1404 does not exist (1404 is not leap)');
+show('jalaali-js isValidJalaaliDate(1404,12,30)',()=>jj.isValidJalaaliDate(1404,12,30));
+show('jalaali-js toGregorian(1404,12,30) [no validation]',()=>JSON.stringify(jj.toGregorian(1404,12,30)));
+show('moment-jalaali parse 1404/12/30 isValid',()=>mj('1404/12/30','jYYYY/jM/jD').isValid());
+show('jalali-moment parse 1404/12/30 isValid',()=>jm.from('1404/12/30','fa','YYYY/MM/DD').isValid());
+show('date-fns-jalali newDate(1404,11,30) → formatted',()=>dfj.format(dfj.newDate(1404,11,30),'yyyy/MM/dd'));
+show('dayjs jalali 1404-12-30 → formatted',()=>dayjs('1404-12-30',{jalali:true}).format('YYYY/MM/DD'));
+show('persian-date [1404,12,30] → formatted',()=>new PD([1404,12,30]).format('YYYY/MM/DD'));
+console.log('--- 31 Shahrivar 1404 + 1 month (Mehr has 30 days)');
+show('moment-jalaali add(1,jMonth)',()=>mj('1404/6/31','jYYYY/jM/jD').add(1,'jMonth').format('jYYYY/jMM/jDD'));
+show('jalali-moment add(1,month)',()=>jm.from('1404/06/31','fa','YYYY/MM/DD').add(1,'month').format('YYYY/MM/DD'));
+show('date-fns-jalali addMonths',()=>dfj.format(dfj.addMonths(dfj.newDate(1404,5,31),1),'yyyy/MM/dd'));
+show('dayjs jalali add(1,month)',()=>dayjs('1404-06-31',{jalali:true}).add(1,'month').format('YYYY/MM/DD'));
+show('persian-date add(months,1)',()=>new PD([1404,6,31]).add('months',1).format('YYYY/MM/DD'));
+console.log('--- 30 Esfand 1403 (leap day) + 1 year → no 30 Esfand in 1404');
+show('moment-jalaali add(1,jYear)',()=>mj('1403/12/30','jYYYY/jM/jD').add(1,'jYear').format('jYYYY/jMM/jDD'));
+show('date-fns-jalali addYears',()=>dfj.format(dfj.addYears(dfj.newDate(1403,11,30),1),'yyyy/MM/dd'));
+show('dayjs jalali add(1,year)',()=>dayjs('1403-12-30',{jalali:true}).add(1,'year').format('YYYY/MM/DD'));
+show('persian-date add(years,1)',()=>new PD([1403,12,30]).add('years',1).format('YYYY/MM/DD'));
+console.log('--- parse Persian digits ۱۴۰۴/۰۱/۱۵');
+show('moment-jalaali',()=>mj('۱۴۰۴/۰۱/۱۵','jYYYY/jMM/jDD').format('YYYY-MM-DD'));
+show('jalali-moment',()=>jm.from('۱۴۰۴/۰۱/۱۵','fa','YYYY/MM/DD').locale('en').format('YYYY-MM-DD'));
+show('dayjs jalali',()=>dayjs('۱۴۰۴/۰۱/۱۵',{jalali:true}).format('YYYY-MM-DD'));

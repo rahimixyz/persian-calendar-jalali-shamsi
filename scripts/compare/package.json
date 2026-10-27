@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "description": "Reproduce the comparison of Jalali libraries against the astronomical reference",
+  "scripts": { "nowruz": "node nowruz.js", "probes": "node probes.js" },
+  "dependencies": {
+    "dayjs": "1.11.23", "date-fns": "4.4.0", "date-fns-jalali": "4.4.0-0", "jalaali-js": "2.0.1",
+    "jalaliday": "3.1.1", "jalali-moment": "3.3.11", "moment": "2.31.0", "moment-jalaali": "0.10.5", "persian-date": "1.1.0"
+  }
+}
