@@ -51,6 +51,35 @@ TEHRAN_INITIAL_OFFSET = {tz_initial}
 TEHRAN_TRANSITIONS = {json.dumps(tz_trans)}
 '''
 (root / 'python' / 'src' / 'taqvim' / '_data.py').write_text(py)
+
+def php_list(xs):
+    return '[' + ', '.join(php_list(x) if isinstance(x, list) else str(x) for x in xs) + ']'
+
+php = f'''<?php
+// {header}
+declare(strict_types=1);
+
+namespace Taqvim;
+
+/** @internal */
+final class Data
+{{
+    public const MIN_YEAR = {first};
+    public const MAX_YEAR = {last};
+    /** Days since 1970-01-01 (proleptic Gregorian) of 1 Farvardin of MIN_YEAR. */
+    public const NOWRUZ_EPOCH_DAY = {nowruz1};
+    /** Little-endian bitmap: bit (year - MIN_YEAR) is set when the year has 366 days. */
+    public const LEAP_HEX = '{leap_hex}';
+    /** Years whose Nowruz depends on the noon convention or lies within the ephemeris error margin. */
+    public const UNCERTAIN_YEARS = {php_list(uncertain)};
+    /** Asia/Tehran: UTC offset in minutes before the first transition. */
+    public const TEHRAN_INITIAL_OFFSET = {tz_initial};
+    /** Asia/Tehran transitions: [unix seconds, UTC offset in minutes from that instant]. */
+    public const TEHRAN_TRANSITIONS = {php_list(tz_trans)};
+}}
+'''
+(root / 'php' / 'src').mkdir(parents=True, exist_ok=True)
+(root / 'php' / 'src' / 'Data.php').write_text(php)
 with open(root / 'reference' / 'nowruz.csv', 'w') as f:
     f.write('jalali_year,nowruz_gregorian,leap,uncertain,equinox_utc\n')
     for r in ref:
