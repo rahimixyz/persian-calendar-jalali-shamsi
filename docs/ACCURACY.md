@@ -47,7 +47,10 @@ so `Asia/Tehran` is always correct regardless of the host system. Other zones us
 Method: for every year 1–2999, ask the library for the Gregorian date of 1 Farvardin and
 compare with the reference, ignoring the 211 uncertain years. Run on 27 October 2026 with
 `scripts/compare/nowruz.js` and `scripts/compare/nowruz.py`; versions are pinned in
-`scripts/compare/package.json` and `requirements.txt`.
+`scripts/compare/package.json` and `requirements.txt`. PHP was checked on 31 October 2026 with
+`scripts/compare/nowruz.php`: PHP's `intl` extension was run directly; for morilog/jalali and
+verta the leap-year rule was read from their source code and re-implemented in the script
+(their code itself was not executed).
 
 | Library | Version | Wrong years (of 2788 certain) | Wrong in 1300–1500 (modern era) |
 |---|---|---|---|
@@ -63,6 +66,9 @@ compare with the reference, ignoring the 211 uncertain years. Run on 27 October 
 | persian-date | 1.1.0 | 8 | **1342 (1963)**, 1474; borderline 1309 |
 | khayyam (Python) | 3.0.17 | 275 (years 13–2997) | **1404 (2025)**, 1437 |
 | jalaliday (dayjs) | 3.1.1 | 902 (years 2–999); 19 errors | none |
+| PHP intl (ICU) | ICU 74.2 | 45 (years 22–2394) | none |
+| morilog/jalali (PHP) | main, 2026-10-29 | same break table as jalaali-js (read from source) | none |
+| verta / hekmatinasser/jalali (PHP) | main, 2026-10-25 | fixed 33-year rule: leap flag wrong in 196 years | none (nearest: 1176, **1634**, 1667) |
 
 The most serious finding: **khayyam returns 20 March 2025 for 1 Farvardin 1404**, so every date
 of 1404 is off by one day. It also rejects the real leap day 30 Esfand 1403 and accepts the
