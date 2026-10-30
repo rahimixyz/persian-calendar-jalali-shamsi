@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- PHP package `rahimixyz/taqvim` (PHP ≥ 8.1, no dependencies) with the same API, data and shared test suite.
+- Persian quick guide at the top of the main README; full Persian guide with PHP/Laravel examples.
+- PHP libraries (intl, morilog/jalali, verta) added to the accuracy report.
+
 ## 1.0.0 — 2026-10-27
 
 First release of the JavaScript/TypeScript and Python packages.

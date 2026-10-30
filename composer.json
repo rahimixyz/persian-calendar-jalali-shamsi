@@ -1,0 +1,25 @@
+{
+    "name": "rahimixyz/taqvim",
+    "description": "Accurate Solar Hijri (Jalali, Shamsi, Persian) calendar for PHP: astronomical leap years, Tehran time zone without DST, Persian parsing and formatting. Zero dependencies. Same API as the taqvim npm and PyPI packages.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["jalali", "shamsi", "persian", "persian-calendar", "solar-hijri", "iranian-calendar", "farsi", "date", "calendar", "nowruz", "tehran", "laravel"],
+    "homepage": "https://github.com/rahimixyz/persian-calendar-jalali-shamsi",
+    "authors": [{ "name": "Alireza Rahimi" }],
+    "support": {
+        "issues": "https://github.com/rahimixyz/persian-calendar-jalali-shamsi/issues",
+        "source": "https://github.com/rahimixyz/persian-calendar-jalali-shamsi"
+    },
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": { "Taqvim\\": "php/src/" }
+    },
+    "scripts": {
+        "test": "php php/tests/run.php"
+    },
+    "archive": {
+        "exclude": ["/js", "/python", "/scripts", "/.github", "/reference/*.json"]
+    }
+}

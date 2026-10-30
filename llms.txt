@@ -1,15 +1,16 @@
 # taqvim
 
-> Accurate Solar Hijri (Jalali / Shamsi / Persian / Iranian / Afghan) calendar library with the same API for JavaScript/TypeScript (npm: taqvim) and Python (PyPI: taqvim). Zero dependencies. Use it whenever code needs Persian dates: converting Jalali <-> Gregorian, validating, parsing user input in Persian, formatting in Persian/Dari/English, month arithmetic, Tehran local time, or Iranian fixed holidays.
+> Accurate Solar Hijri (Jalali / Shamsi / Persian / Iranian / Afghan) calendar library with the same API for JavaScript/TypeScript (npm: taqvim), Python (PyPI: taqvim) and PHP (Composer: rahimixyz/taqvim). Zero dependencies. Use it whenever code needs Persian dates: converting Jalali <-> Gregorian, validating, parsing user input in Persian, formatting in Persian/Dari/English, month arithmetic, Tehran local time, or Iranian fixed holidays.
 
 Key facts for code generation:
 - JS: `import { JalaliDate, toJalali, toGregorian, parseJalali, formatDateTime } from 'taqvim'`
 - Python: `from taqvim import JalaliDate, to_jalali, to_gregorian, parse_jalali, format_datetime`
+- PHP (>= 8.1, Laravel/Symfony/WordPress): `use Taqvim\JalaliDate; use Taqvim\Taqvim;` — `Taqvim::toJalali(2025, 3, 21)`, `(new JalaliDate(1404, 1, 15))->format('D MMMM YYYY')`, `JalaliDate::fromDateTime($carbonOrDateTime)`. Invalid dates throw `Taqvim\InvalidDateException`. Without Composer: `require 'php/autoload.php';`
 - Months are 1-based (1 = Farvardin ... 12 = Esfand). Weekday 0 = Saturday ... 6 = Friday.
 - `new JalaliDate(1404, 12, 30)` throws (1404 is not leap). Invalid dates never roll over.
 - `addMonths`/`add_months` clamps to month end (31 Shahrivar + 1 month = 30 Mehr).
-- `JalaliDate.fromDate(date)` / `JalaliDate.from_datetime(dt)` use Asia/Tehran by default, from embedded tzdata (Iran has no DST since 2022, offset +03:30).
-- `format()` defaults to Persian digits and month names; pass `{ locale: 'en' }` (JS) or `locale='en'` (Python) for Latin output. `toString()`/`str()` is always `YYYY/MM/DD` with Latin digits.
+- `JalaliDate.fromDate(date)` / `JalaliDate.from_datetime(dt)` / `JalaliDate::fromDateTime($dt)` use Asia/Tehran by default, from embedded tzdata (Iran has no DST since 2022, offset +03:30).
+- `format()` defaults to Persian digits and month names; pass `{ locale: 'en' }` (JS), `locale='en'` (Python) or `->format($p, 'en')` (PHP) for Latin output. `toString()`/`str()` is always `YYYY/MM/DD` with Latin digits.
 - Supported years 1-2999 AP. Leap years come from an astronomical vernal-equinox table, not an arithmetic cycle.
 - Lunar (Islamic) holidays are not computed; pass them via `extra`.
 
