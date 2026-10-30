@@ -19,3 +19,11 @@ jobs:
         with: { python-version: '${{ matrix.python }}' }
       - run: PYTHONPATH=src python -m unittest discover -s tests -v
         working-directory: python
+  php:
+    runs-on: ubuntu-latest
+    strategy: { matrix: { php: ['8.1', '8.3', '8.4'] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: '${{ matrix.php }}', extensions: mbstring }
+      - run: php php/tests/run.php
