@@ -1,0 +1,58 @@
+name: publish
+# Publishes both packages when a GitHub release is published (or when run by hand).
+# PyPI uses Trusted Publishing (no token). npm uses Trusted Publishing once it is
+# configured on npmjs.com; for the very first npm release a token in the NPM_TOKEN
+# repository secret is used instead.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'What to publish'
+        type: choice
+        options: [both, npm, pypi]
+        default: both
+
+jobs:
+  npm:
+    if: github.event_name == 'release' || inputs.target != 'pypi'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    defaults:
+      run:
+        working-directory: js
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g npm@latest
+      - run: npm install
+      - run: npm test
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  pypi:
+    if: github.event_name == 'release' || inputs.target != 'npm'
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: PYTHONPATH=src python -m unittest discover -s tests
+        working-directory: python
+      - run: python -m pip install build && python -m build
+        working-directory: python
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: python/dist
